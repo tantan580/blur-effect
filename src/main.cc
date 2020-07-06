@@ -239,6 +239,7 @@ static void gl_init()
     n = gdk_pixbuf_get_n_channels(pixbuf);
     x = gdk_pixbuf_get_width(pixbuf);
     y = gdk_pixbuf_get_height(pixbuf);
+    std::cout<<"x:"<<x<<"y:"<<y<<std::endl;
 
     glTexImage2D(GL_TEXTURE_2D, 0, n == 4 ? GL_RGBA : GL_RGB, x, y, 0,
             n == 4 ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -310,7 +311,9 @@ static void render()
     glDisable(GL_DEPTH_TEST);
 
     glViewport(0, 0, ctx.tex_width, ctx.tex_height);
+    std::cout<<"tex w:"<<ctx.tex_width<<",tex h:"<<ctx.tex_height<<std::endl;
     for (int i = 0; i < rounds; i++) {
+        std::cout<<"i"<<i<<std::endl;
         GLuint tex1 = i == 0 ? ctx.tex : ctx.fbTex[1];
         GLfloat* kernels = &kernel[0];
 
@@ -333,6 +336,7 @@ static void render()
     }
 
     glViewport(0, 0, ctx.width, ctx.height);
+    std::cout<<"tex w:"<<ctx.width<<",tex h:"<<ctx.width<<std::endl;
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glBindTexture(GL_TEXTURE_2D, ctx.fbTex[1]);
     glUseProgram(ctx.programDirect);
@@ -352,8 +356,12 @@ int main(int argc, char *argv[])
 
     ctx.width = mode->width;
     ctx.height = mode->height;
+    std::cout<<"ctx.width:"<<ctx.width<<std::endl;
+    std::cout<<"ctx.height:"<<ctx.height<<std::endl;
     ctx.tex_width = (float)ctx.width * 0.25f;
     ctx.tex_height = (float)ctx.height * 0.25f;
+    std::cout<<"tex_width:"<<ctx.tex_width<<std::endl;
+    std::cout<<"tex_width:"<<ctx.tex_height<<std::endl;
 
     int wx, wy;
     glfwGetMonitorPos(monitor, &wx, &wy);
@@ -447,16 +455,16 @@ int main(int argc, char *argv[])
     auto time = glfwGetTime();
     float animationDuration = 4.0;
     while (!glfwWindowShouldClose(ctx.window)) {
-        query_timer();
+        //query_timer();
 
-        radius = seqs[i].radius;
-        build_gaussian_blur_kernel(&radius, &kernel[1], &kernel[21]);
-        kernel[0] = radius;
+        //radius = seqs[i].radius;
+        //build_gaussian_blur_kernel(&radius, &kernel[1], &kernel[21]);
+        //kernel[0] = radius;
 
-        rounds = seqs[i].rounds;
+        //rounds = seqs[i].rounds;
         render();
 
-        end_timer();
+        //end_timer();
         //while (glfwGetTime() - time < 1.0/2.0) {
             //glfwWaitEvents();
         //}

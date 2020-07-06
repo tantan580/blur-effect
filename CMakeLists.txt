@@ -5,7 +5,7 @@ set(target blur_image)
 project(${target})
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS on)
-option(BUILD_DEMO "build windowing demo" off)
+option(BUILD_DEMO "build windowing demo" on)
 #set(CMAKE_CXX_COMPILER "clang++")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wno-error")
 
@@ -32,7 +32,12 @@ include_directories(${DEPS2_INCLUDE_DIRS})
 
 if (BUILD_DEMO)
 add_executable(blur-exp src/main.cc)
-target_link_libraries(blur-exp ${DEPS_LIBRARIES})
+target_link_libraries(blur-exp
+    ${DEPS_LIBRARIES}
+    -lGL
+    -ldl
+    -lpthread
+ )
 endif()
 
 add_executable(blur_image src/blur_image.cc)
